@@ -1,7 +1,6 @@
 plugins {
     java
     application
-    id("org.javamodularity.moduleplugin") version "1.8.15"
     id("org.openjfx.javafxplugin") version "0.0.13"
     id("org.beryx.jlink") version "2.25.0"
 }
@@ -53,5 +52,17 @@ jlink {
     options.set(listOf("--strip-debug", "--compress", "2", "--no-header-files", "--no-man-pages"))
     launcher {
         name = "app"
+    }
+}
+tasks.withType<Jar> {
+    tasks.jar {
+        manifest {
+            attributes["Main-Class"] = "com.example.graphwork.Launcher"
+        }
+        from ({
+            configurations.runtimeClasspath.get().filter {it.name.endsWith("jar")}.map {zipTree(it)}
+        })
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+        exclude("META-INF/*.SF", "META-INF/*.DSA", "META-INF/*.RSA")
     }
 }
