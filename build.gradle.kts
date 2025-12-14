@@ -25,8 +25,7 @@ tasks.withType<JavaCompile> {
 }
 
 application {
-    mainModule.set("com.example.graphwork")
-    mainClass.set("com.example.graphwork.HelloApplication")
+    mainClass.set("com.example.graphwork.Launcher")
 }
 
 javafx {
